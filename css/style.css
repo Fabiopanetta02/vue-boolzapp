@@ -61,3 +61,9 @@ body{
 }
 
 /*! PARTE DESTRA */
+.bg-chat{
+    height: 79vh;
+    background-image: url(../img/mine.jpg);
+    background-size: contain;
+    overflow-y: scroll;
+}
