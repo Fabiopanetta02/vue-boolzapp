@@ -1,4 +1,63 @@
-/* :root{
-    --pink: #E53170;
-} */
+:root{
+    --green: #009688;
+    --grey: #D9DBD4;
+    --grey-user: #EAEAEA;
+    --azzurro: #8EDAFC;
+}
 
+/*? GENERICS */
+body{
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--green) 10%, var(--grey) 10%);
+}
+
+/* QUADRATO GRANDE */
+.board{
+    margin: 30px auto;
+    max-width: 100%;
+    position: relative;
+    height: 95vh;
+    background-color: #fff;
+}
+
+/*! PARTE SINISTRA */
+.user{
+    background-color: var(--grey-user);
+    height: 8vh;
+}
+
+.user .profile{
+    height: 100%;
+}
+
+#notifications{
+    background-color: var(--azzurro);
+    height: 8vh;
+}
+
+#notifications .label-bell{
+    height: 100%;
+    background-color: #F2FBFF;
+}
+
+#notifications .label-bell .fa-bell-slash{
+    color: var(--azzurro);
+    line-height: 35px;
+}
+
+#search{
+    background-color: var(--grey-user);
+    height: 5vh; 
+}
+
+#chat{
+    overflow-y: scroll;
+    height: 74vh;
+}
+
+#chat li{
+    height: 8vh;
+}
+
+/*! PARTE DESTRA */
