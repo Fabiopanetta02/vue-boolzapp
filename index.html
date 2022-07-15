@@ -24,6 +24,13 @@
     <!-- STYLE -->
     <link rel="stylesheet" href="css/style.css">
 
+    <!-- DAY JS -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"></script>
+    <!-- Custom parse format plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/plugin/customParseFormat.js"></script>
+    <!-- day.js cdn -->
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+
     <!-- VUE JS -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <title>Boolzapp</title>
@@ -61,13 +68,13 @@
                         <span class="input-group-text bg-white text-secondary">
                             <i class="fa-solid fa-magnifying-glass mx-2"></i>
                         </span>
-                        <input type="text" class="form-control" placeholder="Cerca o inizia una nuova chat">
+                        <input type="text" class="form-control" placeholder="Cerca o inizia una nuova chat" v-model="search" @keydown.enter="filteredContacts()">
                       </div>
                 </section>
                 <!-- Chat -->
                 <section id="chat" class="px-4 py-3">
                     <ul class="list-group list-group-flush">
-                        <li v-for="contact in contacts" class="list-group-item my-3">
+                        <li v-for="(contact, index) in filteredContacts" class="list-group-item my-3" :class="(index == currentIndex ? 'contact-active' : null)"   @click="goToIndex(index)">
                             <img :src="`img/avatar${contact.avatar}.jpg`" :alt="contact.name" class="h-100 profile rounded-circle me-2">
                             <h6 class="d-inline align-top">{{contact.name}}</h6>
                         </li>
@@ -76,28 +83,39 @@
             </div>
             <!-- Parte destra-->
             <div class="col-8">
-                <div class="user d-flex align-items-center justify-content-between px-4 py-3">
-                    <div class="profile">
-                        <img src="img/avatar_1.jpg" alt="avatar_1" class="h-100 profile rounded-circle">
+                <header>
+                    <div class="user d-flex align-items-center justify-content-between px-4 py-3">
+                        <div class="profile">
+                            <img :src="`img/avatar${filteredContacts[currentIndex].avatar}.jpg`" :alt="filteredContacts[currentIndex].name" class="h-100 profile rounded-circle">
+                        </div>
+                        <div class="d-flex flex-grow-1 flex-column ms-2">
+                            <div class="h5">{{filteredContacts[currentIndex].name}}</div>
+                            <span class="text-secondary">Ultimo accesso oggi alle</span> 
+                        </div>
+                        <div class="fs-5 text-secondary">
+                            <a href="#" class="text-secondary">
+                                <i class="fa-solid fa-magnifying-glass mx-2"></i>
+                            </a>
+                            <a href="#" class="text-secondary">
+                                <i class="fa-solid fa-paperclip mx-2"></i>
+                            </a>
+                            <a href="#" class="text-secondary">
+                                <i class="fa-solid fa-ellipsis-vertical mx-2"></i>
+                            </a> 
+                        </div>
                     </div>
-                    <div class="d-flex flex-grow-1 flex-column ms-2">
-                        <h5>Michele</h5>
-                        <span class="text-secondary">Ultimo accesso oggi alle</span> 
-                    </div>
-                    <div class="fs-5 text-secondary">
-                        <a href="#" class="text-secondary">
-                            <i class="fa-solid fa-magnifying-glass mx-2"></i>
-                        </a>
-                        <a href="#" class="text-secondary">
-                            <i class="fa-solid fa-paperclip mx-2"></i>
-                        </a>
-                        <a href="#" class="text-secondary">
-                            <i class="fa-solid fa-ellipsis-vertical mx-2"></i>
-                        </a> 
-                    </div>
-                </div>
-                <div class="bg-chat">              
-                </div>
+                </header>
+                <section class="bg-chat">
+                        <ul class="px-3">
+                            <li v-for="(message, index) in filteredContacts[currentIndex].messages" class="message-container p-3" :class="(filteredContacts[currentIndex].messages[index].status == 'sent') ? 'message-sent' : 'message-received'">
+                                <div class="message p-2 rounded-3">
+                                    <p>{{filteredContacts[currentIndex].messages[index].text}}</p> 
+                                    <time datetime="2021-08-03T09:53">{{filteredContacts[currentIndex].messages[index].date}}</time>
+                                </div>
+                            </li>
+                        </ul>        
+                </section>
+                <!-- Parte sottostante chat -->
                 <div class="user d-flex align-items-center px-4 py-3">
                     <!-- Emoticon -->
                     <div class="me-3">
@@ -107,7 +125,7 @@
                     </div>
                     <!-- Messaggio -->
                     <div class="input-group input-group-lg h-100">
-                        <input type="text" class="form-control" placeholder="Scrivi un messaggio">
+                        <input type="text" class="form-control" placeholder="Scrivi un messaggio" v-model="messageText" @keydown.enter="newMessage(currentIndex)">
                     </div>
                     <!-- Microfono -->
                     <div class="ms-3">

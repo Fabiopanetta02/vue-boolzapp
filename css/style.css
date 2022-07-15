@@ -9,14 +9,13 @@
 body{
     height: 100vh;
     overflow: hidden;
-    background: linear-gradient(180deg, var(--green) 10%, var(--grey) 10%);
+    background-image: linear-gradient(180deg, var(--green) 15%, var(--grey) 15%);
 }
 
 /* QUADRATO GRANDE */
 .board{
     margin: 30px auto;
     max-width: 100%;
-    position: relative;
     height: 95vh;
     background-color: #fff;
 }
@@ -43,7 +42,7 @@ body{
 
 #notifications .label-bell .fa-bell-slash{
     color: var(--azzurro);
-    line-height: 35px;
+    line-height: 38px;
 }
 
 #search{
@@ -58,6 +57,11 @@ body{
 
 #chat li{
     height: 8vh;
+    cursor: pointer;
+}
+
+#chat li.contact-active{
+    background-color: var(--grey-user);
 }
 
 /*! PARTE DESTRA */
@@ -67,3 +71,37 @@ body{
     background-size: contain;
     overflow-y: scroll;
 }
+
+
+/* PARTE CHAT */
+.message-container{
+    display: flex;
+}
+
+.message-container.message-sent{
+    justify-content: flex-end;
+}
+
+.message-container.message-received{
+    justify-content: flex-start;
+}
+
+.message-container.message-sent .message{
+    background-color: #d5f9ba;
+}
+
+.message-container.message-received .message{
+    background-color: #fff;
+}
+
+.message-container .message p{
+    margin-bottom: 0;
+}
+
+.message-container .message time{
+    display: block;
+    text-align: right;
+    font-size: 11px;
+    color: #aaa;
+}
+
