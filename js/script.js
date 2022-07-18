@@ -112,6 +112,7 @@ const root = new Vue({
 
         // funzione che inserisci messaggio scritto nell'array e da la risposta
         newMessage(contact) {
+          if(!this.messageText) return;
           let newSentMessage = {
             date: dayjs().format('DD/MM/YYYY HH:mm:ss'),
             text: this.messageText,
